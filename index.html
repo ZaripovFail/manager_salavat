@@ -15,7 +15,6 @@
 <div class="card">
 
   <div class="header">
-    <div class="monogram">СФ</div>
     <p class="name">Салават Фазлиев</p>
     <p class="role-line">Менеджер<span class="sep">·</span>МебельДан</p>
   </div>
@@ -88,8 +87,8 @@ document.getElementById('saveContactBtn').addEventListener('click', function () 
   var lines = [
     'BEGIN:VCARD',
     'VERSION:3.0',
-    'N:Фазлиев;Салават;;;',
-    'FN:Салават Фазлиев',
+    'N:;Салават Менеджер МебельДан;;;',
+    'FN:Салават Менеджер МебельДан',
     'ORG:МебельДан',
     'TITLE:Менеджер',
     'TEL;TYPE=CELL:+79600492284',
@@ -97,15 +96,25 @@ document.getElementById('saveContactBtn').addEventListener('click', function () 
     'END:VCARD'
   ];
   var vcf = lines.join('\r\n');
-  var blob = new Blob([vcf], { type: 'text/vcard;charset=utf-8' });
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href = url;
-  a.download = 'Салават Фазлиев.vcf';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+
+  // Прямая навигация на data-URI — надёжнее, чем Blob + программный клик,
+  // особенно в Safari на iOS, где скачивание через createObjectURL часто
+  // срабатывает тихо и без результата.
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+  if (isIOS) {
+    window.location.href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcf);
+  } else {
+    var blob = new Blob([vcf], { type: 'text/vcard;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'Салават Менеджер МебельДан.vcf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 3000);
+  }
 });
 </script>
 
