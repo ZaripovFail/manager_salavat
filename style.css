@@ -1,0 +1,283 @@
+/* ==========================================================
+   МебельДан — цифровая визитка. Общий стиль для всех карточек.
+   ========================================================== */
+
+:root {
+  --bg: #F7F3EC;
+  --paper: #FBF8F2;
+  --ink: #2B2420;
+  --ink-soft: #4A4038;
+  --ink-muted: #8B8074;
+  --brass: #B08D57;
+  --brass-deep: #8C6A4F;
+  --hairline: rgba(43, 36, 32, 0.12);
+  --hairline-strong: rgba(43, 36, 32, 0.22);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 32px 16px 56px;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* ---------- Header ---------- */
+
+.header {
+  text-align: center;
+  padding: 8px 0 28px;
+}
+
+.monogram {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  border: 1px solid var(--brass);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--brass-deep);
+  background: var(--paper);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+
+.role-line {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0;
+}
+
+.role-line .sep {
+  margin: 0 6px;
+  color: var(--hairline-strong);
+}
+
+/* ---------- Seam (signature element) ---------- */
+
+.seam-wrap {
+  position: relative;
+  height: 24px;
+  margin: 0 0 6px;
+}
+
+.seam-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: var(--brass);
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: top;
+  animation: draw-seam 0.7s ease-out 0.15s forwards;
+}
+
+@keyframes draw-seam {
+  to { transform: translateX(-50%) scaleY(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seam-line { animation: none; transform: translateX(-50%) scaleY(1); }
+}
+
+/* ---------- Primary action ---------- */
+
+.primary-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 52px;
+  background: var(--brass);
+  color: var(--paper);
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  margin-bottom: 22px;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.primary-btn:hover { background: var(--brass-deep); }
+.primary-btn:active { transform: scale(0.98); }
+
+/* ---------- Contact list ---------- */
+
+.row-list {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 22px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 4px;
+  border-bottom: 1px solid var(--hairline);
+  text-decoration: none;
+  color: var(--ink);
+  transition: opacity 0.15s ease;
+}
+
+.row:last-child { border-bottom: none; }
+.row:hover { opacity: 0.65; }
+
+.row .icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--brass-deep);
+}
+
+.row .label {
+  flex: 1;
+  font-size: 15px;
+}
+
+.row .chevron {
+  width: 14px;
+  height: 14px;
+  color: var(--ink-muted);
+  flex-shrink: 0;
+}
+
+/* ---------- Address block ---------- */
+
+.address-block {
+  margin-bottom: 22px;
+  padding: 16px 4px;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.address-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.address-heading .icon {
+  width: 20px;
+  height: 20px;
+  color: var(--brass-deep);
+  flex-shrink: 0;
+}
+
+.address-text {
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin: 0 0 14px 30px;
+}
+
+.map-chips {
+  display: flex;
+  gap: 10px;
+  margin-left: 30px;
+}
+
+.map-chip {
+  flex: 1;
+  text-align: center;
+  padding: 10px 8px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  color: var(--ink-soft);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.map-chip:hover {
+  border-color: var(--brass);
+  color: var(--brass-deep);
+}
+
+/* ---------- Save contact ---------- */
+
+.save-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  border: 1px solid var(--ink);
+  border-radius: 6px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 28px;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.save-btn:hover { background: rgba(43, 36, 32, 0.05); }
+.save-btn:active { transform: scale(0.98); }
+
+.save-btn .icon { width: 18px; height: 18px; }
+
+/* ---------- Footer ---------- */
+
+.footer {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  opacity: 0.6;
+}
+
+/* ---------- Focus states ---------- */
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+}
